@@ -179,8 +179,9 @@
   }
   .cart-item-img{
     width:60px; height:60px; background:var(--panel); border:1px solid var(--line);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden;
   }
+  .cart-item-img img{width:100%; height:100%; object-fit:cover;}
   .cart-item-img svg{width:60%; height:60%;}
   .cart-item-info .brand{
     font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.09em;
@@ -853,7 +854,7 @@
 
   <div class="sticky-bar" id="stickyBar">
     <span class="price-now" id="stickyPrice">£39.00</span>
-    <a href="#buy" class="btn btn-primary">Add to basket</a>
+    <a href="#" class="btn btn-primary" id="stickyBuyBtn">Buy now</a>
   </div>
 
   <!-- CART DRAWER -->
@@ -1024,6 +1025,12 @@
     "5 L": 69.00,
     "6.6 L": 90.00
   };
+  const SIZE_IMAGES = {
+    "3 L": "images/pan-3l-1.jpg",
+    "4.3 L": "images/pan-4-3l-1.jpg",
+    "5 L": "images/pan-5l-1.jpg",
+    "6.6 L": "images/pan-6-6l-1.jpg"
+  };
 
   function updatePriceDisplays(size){
     const price = SIZE_PRICES[size];
@@ -1056,7 +1063,7 @@
       itemsEl.innerHTML = cartItems.map((item, i) => `
         <div class="cart-item">
           <div class="cart-item-img">
-            <svg viewBox="0 0 240 240" fill="none"><circle cx="120" cy="120" r="70" fill="#242424" stroke="#3A5A46" stroke-width="2"/></svg>
+            <img src="${SIZE_IMAGES[item.size] || SIZE_IMAGES['3 L']}" alt="Hybrid Sauté Pan — ${item.size}">
           </div>
           <div class="cart-item-info">
             <div class="brand">The Cookery</div>
@@ -1115,14 +1122,23 @@
     openCart();
   });
 
-  document.getElementById('buyNowBtn').addEventListener('click', (e)=>{
-    e.preventDefault();
+  function goToCheckoutDirect(){
     const activeChip = document.querySelector('.variant-chip.active');
     const size = activeChip ? activeChip.textContent.trim() : '3 L';
     // "Buy now" pula o carrinho e vai direto pro checkout, só com este item.
     const cartData = [{ size, qty }];
     const encoded = encodeURIComponent(JSON.stringify(cartData));
     window.location.href = 'checkout.html?cart=' + encoded;
+  }
+
+  document.getElementById('buyNowBtn').addEventListener('click', (e)=>{
+    e.preventDefault();
+    goToCheckoutDirect();
+  });
+
+  document.getElementById('stickyBuyBtn').addEventListener('click', (e)=>{
+    e.preventDefault();
+    goToCheckoutDirect();
   });
 
   const cartDrawer = document.getElementById('cartDrawer');
