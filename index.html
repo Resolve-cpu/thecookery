@@ -128,6 +128,50 @@
   }
   .cart-count.show{display:flex;}
 
+  /* ===== LIGHTBOX ===== */
+  .gallery-main, .gallery-grid-item{ cursor: zoom-in; }
+  .lightbox{
+    position:fixed; inset:0; z-index:100;
+    display:none; align-items:center; justify-content:center;
+  }
+  .lightbox.show{ display:flex; }
+  .lightbox-overlay{
+    position:absolute; inset:0; background:rgba(0,0,0,0.9);
+  }
+  .lightbox-content{
+    position:relative; z-index:1;
+    max-width:90vw; max-height:85vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox-content img{
+    max-width:90vw; max-height:85vh; object-fit:contain;
+    border:1px solid var(--line);
+  }
+  .lightbox-close{
+    position:absolute; top:20px; right:20px; z-index:2;
+    width:40px; height:40px; border-radius:50%;
+    background:var(--black-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .lightbox-close svg{width:16px; height:16px; stroke:var(--white);}
+  .lightbox-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--black-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .lightbox-arrow svg{width:18px; height:18px; stroke:var(--white);}
+  .lightbox-prev{ left:16px; }
+  .lightbox-next{ right:16px; }
+  @media(min-width:760px){
+    .lightbox-prev{ left:24px; }
+    .lightbox-next{ right:24px; }
+  }
+  .lightbox-counter{
+    position:absolute; bottom:-34px; left:50%; transform:translateX(-50%);
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--gray);
+  }
+
   /* ===== CART DRAWER ===== */
   .cart-overlay{
     position:fixed; inset:0; background:rgba(0,0,0,0.6);
@@ -857,6 +901,24 @@
     <a href="#" class="btn btn-primary" id="stickyBuyBtn">Buy now</a>
   </div>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-close" id="lightboxClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4l16 16M20 4 4 20"/></svg>
+    </div>
+    <div class="lightbox-arrow lightbox-prev" id="lightboxPrev">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="The Cookery — Hybrid Sauté Pan">
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+    </div>
+    <div class="lightbox-arrow lightbox-next" id="lightboxNext">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
   <!-- CART DRAWER -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer">
@@ -988,23 +1050,23 @@
     const images = PRODUCT_IMAGES[size];
 
     gridEl.innerHTML = '';
+    currentGalleryImages = images && images.length ? images : [];
 
     if(images && images.length){
       mainEl.innerHTML = `<img src="${images[0]}" alt="The Cookery — Hybrid Sauté Pan">`;
+      mainEl.onclick = () => openLightbox(0);
+
       images.slice(1).forEach((src, i)=>{
         const div = document.createElement('div');
         div.className = 'gallery-grid-item';
         div.innerHTML = `<img src="${src}" alt="The Cookery — Hybrid Sauté Pan, photo ${i+2}">`;
-        div.addEventListener('click', ()=>{
-          const current = mainEl.querySelector('img').src;
-          mainEl.innerHTML = `<img src="${src}" alt="The Cookery — Hybrid Sauté Pan">`;
-          div.innerHTML = `<img src="${current}" alt="The Cookery — Hybrid Sauté Pan">`;
-        });
+        div.addEventListener('click', () => openLightbox(i + 1));
         gridEl.appendChild(div);
       });
       noteEl.style.display = 'none';
     } else {
       mainEl.innerHTML = placeholderMainSVG;
+      mainEl.onclick = null;
       for(let i=0;i<4;i++){
         const div = document.createElement('div');
         div.className = 'gallery-grid-item';
@@ -1015,6 +1077,43 @@
       noteEl.textContent = `[ fotos do tamanho ${size} ainda não enviadas — placeholder por enquanto ]`;
     }
   }
+
+  // ===== LIGHTBOX =====
+  let currentGalleryImages = [];
+  let lightboxIndex = 0;
+
+  function openLightbox(index){
+    if(!currentGalleryImages.length) return;
+    lightboxIndex = index;
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('show');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('show');
+  }
+  function lightboxNext(){
+    lightboxIndex = (lightboxIndex + 1) % currentGalleryImages.length;
+    renderLightbox();
+  }
+  function lightboxPrev(){
+    lightboxIndex = (lightboxIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+    renderLightbox();
+  }
+  function renderLightbox(){
+    document.getElementById('lightboxImg').src = currentGalleryImages[lightboxIndex];
+    document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${currentGalleryImages.length}`;
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxOverlay').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxNext').addEventListener('click', lightboxNext);
+  document.getElementById('lightboxPrev').addEventListener('click', lightboxPrev);
+  document.addEventListener('keydown', (e)=>{
+    if(!document.getElementById('lightbox').classList.contains('show')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowRight') lightboxNext();
+    if(e.key === 'ArrowLeft') lightboxPrev();
+  });
 
   updateGallery('3 L');
 
