@@ -623,7 +623,7 @@
             </div>
           </div>
 
-          <a href="#" class="btn btn-buynow btn-block">Buy now</a>
+          <a href="#" class="btn btn-buynow btn-block" id="buyNowBtn">Buy now</a>
           <a href="#" class="btn btn-addcart btn-block" style="margin-top:10px;">Add to basket</a>
 
           <div class="trust-list">
@@ -1113,6 +1113,16 @@
     const size = activeChip ? activeChip.textContent.trim() : '3 L';
     addToCart(size, qty);
     openCart();
+  });
+
+  document.getElementById('buyNowBtn').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const activeChip = document.querySelector('.variant-chip.active');
+    const size = activeChip ? activeChip.textContent.trim() : '3 L';
+    // "Buy now" pula o carrinho e vai direto pro checkout, só com este item.
+    const cartData = [{ size, qty }];
+    const encoded = encodeURIComponent(JSON.stringify(cartData));
+    window.location.href = 'checkout.html?cart=' + encoded;
   });
 
   const cartDrawer = document.getElementById('cartDrawer');
