@@ -545,6 +545,11 @@
   .test-grid{display:grid; grid-template-columns:1fr; gap:24px;}
   @media(min-width:760px){ .test-grid{grid-template-columns:repeat(3,1fr);} }
   .test-card{background:var(--panel); border:1px solid var(--line); padding:28px 26px;}
+  .test-card-photo{
+    width:100%; aspect-ratio:4/3; overflow:hidden; margin:-28px -26px 20px;
+    width:calc(100% + 52px);
+  }
+  .test-card-photo img{width:100%; height:100%; object-fit:cover; display:block;}
   .stars{color:#18352B; font-size:13px; letter-spacing:2px; margin-bottom:14px;}
   .test-card p.quote{font-size:15px; line-height:1.6; margin-bottom:16px; color:var(--white);}
   .test-card .who{font-family:'Inter', sans-serif; font-size:11.5px; letter-spacing:0.04em; color:var(--gray);}
@@ -828,14 +833,16 @@
       <p class="reviews-disclosure">Product reviews supplied directly by our manufacturer, from verified buyers of this same pan.</p>
       <div class="test-grid">
         <div class="test-card">
+          <div class="test-card-photo"><img src="images/reviews/review-1.jpg" alt="Hybrid Sauté Pan on an induction hob"></div>
           <div class="stars">★★★★★</div>
-          <p class="quote">"Extremely easy to clean and heats up very well. These pans will forever be in my cooking lineup!"</p>
-          <div class="who">— Kyle P., Verified Buyer</div>
+          <p class="quote">"This sauté pan is a real stunner! It looks so much better than I was expecting. Everything cooks perfectly in it and at a much lower heat setting. I don't use it for sauté, I just use it as a frying pan as I like having deeper sides. Wish I could buy the whole range."</p>
+          <div class="who">— Mrs Fields, Verified Buyer</div>
         </div>
         <div class="test-card">
+          <div class="test-card-photo"><img src="images/reviews/review-2.jpg" alt="Hybrid Sauté Pan and lid on a hob"></div>
           <div class="stars">★★★★★</div>
-          <p class="quote">"Deep heavy duty pan... love it!"</p>
-          <div class="who">— Dechi S., Verified Buyer</div>
+          <p class="quote">"This sauté pan is a present for hubby's birthday, it is what he wanted, he really loves it, has not used it yet but loves the look and the weight, quick delivery. I am sure he won't be disappointed when he does use it, I am happy that he is happy."</p>
+          <div class="who">— Michael Dougan, Verified Buyer</div>
         </div>
         <div class="test-card">
           <div class="stars">★★★★★</div>
