@@ -9,19 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#F5F4F1;
-    --ink-soft:#A8A6A0;
-    --paper:#1B1B1B;
-    --paper-alt:#0E0E0E;
-    --indigo-deep:#12261C;
-    --accent:#C4232F;
-    --accent-dark:#9E1B25;
+    --ink:#1C1C1A;
+    --ink-soft:#6B6862;
+    --paper:#FAF8F3;
+    --paper-alt:#F5F1E8;
+    --indigo-deep:#18352B;
+    --accent:#18352B;
+    --accent-dark:#132A22;
     --green:#4B9C6D;
-    --line:rgba(245,244,241,.14);
-    --line-soft:rgba(245,244,241,.08);
+    --line:rgba(28,28,26,.14);
+    --line-soft:rgba(28,28,26,.08);
     --radius:3px;
     --radius-card:4px;
-    --shadow-cta:0 8px 20px -6px rgba(196,35,47,.5);
+    --shadow-cta:0 8px 20px -6px rgba(24,53,43,.5);
     --display:'Fraunces', serif;
     --body:'Work Sans', sans-serif;
     --mono:'IBM Plex Mono', monospace;
@@ -63,7 +63,7 @@
     font-size:14px;color:var(--ink);background:var(--paper-alt);transition:border-color .15s;appearance:none;
   }
   select{
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8A6A0' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6862' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
     background-repeat:no-repeat;background-position:right 12px center;background-size:16px;
   }
   input:focus, select:focus{outline:none;border-color:var(--accent-dark);}
@@ -385,15 +385,15 @@
       elements = stripe.elements({
         clientSecret,
         appearance: {
-          theme: 'night',
+          theme: 'stripe',
           variables: {
-            colorPrimary: '#C4232F',
-            colorBackground: '#1B1B1B',
+            colorPrimary: '#18352B',
+            colorBackground: '#FAF8F3',
             fontFamily: 'Work Sans, sans-serif',
             borderRadius: '3px',
-            colorText: '#F5F4F1',
-            colorTextSecondary: '#A8A6A0',
-            colorDanger: '#C4232F',
+            colorText: '#1C1C1A',
+            colorTextSecondary: '#6B6862',
+            colorDanger: '#C0392B',
           },
         },
       });
