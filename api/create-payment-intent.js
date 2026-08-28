@@ -6,6 +6,11 @@
 // no servidor, usando a tabela de preços abaixo — nunca confiamos em
 // um preço vindo do navegador do cliente (isso evita que alguém
 // manipule o preço antes de pagar).
+//
+// PROMOÇÃO ATIVA: 1ª unidade preço cheio, 2ª unidade com 20% de desconto
+// (repete a cada par: 3ª cheia, 4ª com desconto...). Essa regra também
+// existe em index.html e checkout.html (função calcLineTotal) — se mudar
+// aqui, mude nos três lugares.
 
 import Stripe from 'stripe';
 
@@ -20,6 +25,14 @@ const SIZE_PRICES = {
 };
 
 const MAX_QTY_PER_ITEM = 9;
+
+// Promoção: 1ª unidade preço cheio, a 2ª tem 20% off — repete a cada par.
+// Trabalha em pence pra evitar erro de arredondamento com ponto flutuante.
+function calcLineTotalPence(unitPricePence, qty) {
+  const pairs = Math.floor(qty / 2);
+  const remainder = qty % 2;
+  return Math.round(pairs * unitPricePence * 1.8) + (remainder * unitPricePence);
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -47,7 +60,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Invalid quantity.' });
       }
 
-      amountInPence += Math.round(price * 100) * qty;
+      amountInPence += calcLineTotalPence(Math.round(price * 100), qty);
     }
 
     if (amountInPence < 30) {
