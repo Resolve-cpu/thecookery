@@ -107,6 +107,7 @@
   .os-item .thumb img{width:100%;height:100%;object-fit:cover;}
   .os-item .meta{flex:1;font-size:12px;}
   .os-item .meta .pname{display:block;color:var(--ink-soft);font-size:11.5px;margin-bottom:2px;font-family:var(--mono);}
+  .os-item .meta .promo-tag{display:block;color:#18352B;font-size:11px;font-weight:600;margin-top:4px;}
   .os-item .meta b{display:block;font-size:13.5px;font-weight:600;}
   .os-item .right-col{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
   .qty-stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:20px;}
@@ -282,6 +283,13 @@
     "6.6 L": "images/pan-6-6l-1.jpg"
   };
 
+  // Promoção: 1ª unidade preço cheio, a 2ª tem 20% off — repete a cada par
+  function calcLineTotal(unitPrice, qty){
+    const pairs = Math.floor(qty / 2);
+    const remainder = qty % 2;
+    return (pairs * unitPrice * 1.8) + (remainder * unitPrice);
+  }
+
   let cartItems = [];
 
   function getCartFromURL(){
@@ -323,12 +331,14 @@
     wrap.innerHTML = cartItems.map((item, idx) => {
       const price = SIZE_PRICES[item.size];
       const img = SIZE_IMAGES[item.size];
+      const lineTotal = calcLineTotal(price, item.qty);
       return `
       <div class="os-item">
         <div class="thumb"><img src="${img}" alt="${PRODUCT_NAME} — ${item.size}"></div>
         <div class="meta">
           <span class="pname">The Cookery · ${item.size}</span>
           <b>${PRODUCT_NAME}</b>
+          ${item.qty >= 2 ? '<span class="promo-tag">2nd pan 20% off</span>' : ''}
         </div>
         <div class="right-col">
           <div class="qty-stepper">
@@ -336,12 +346,12 @@
             <span>${item.qty}</span>
             <button type="button" onclick="changeQty(${idx},1)">+</button>
           </div>
-          <div class="os-price">£${(item.qty * price).toFixed(2)}</div>
+          <div class="os-price">£${lineTotal.toFixed(2)}</div>
         </div>
       </div>`;
     }).join('');
 
-    const subtotal = cartItems.reduce((sum, item) => sum + item.qty * SIZE_PRICES[item.size], 0);
+    const subtotal = cartItems.reduce((sum, item) => sum + calcLineTotal(SIZE_PRICES[item.size], item.qty), 0);
     document.getElementById('osSubtotal').textContent = '£' + subtotal.toFixed(2);
     document.getElementById('osTotal').textContent = '£' + subtotal.toFixed(2);
     document.getElementById('payBtnLabel').textContent = 'Pay £' + subtotal.toFixed(2);

@@ -233,6 +233,7 @@
   }
   .cart-item-info .name{font-weight:600; font-size:14px; color:var(--white); margin-bottom:6px; line-height:1.25;}
   .cart-item-info .meta{font-size:12px; color:var(--gray); line-height:1.6;}
+  .promo-tag{color:#18352B; font-weight:600;}
   .cart-item-right{display:flex; flex-direction:column; align-items:flex-end; justify-content:space-between;}
   .cart-item-price{font-family:'Inter', sans-serif; font-weight:600; font-size:14px; color:var(--white); white-space:nowrap;}
   .cart-item-delete{width:26px; height:26px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
@@ -310,15 +311,22 @@
   }
 
   /* GALLERY */
+  .gallery-main-wrap{position:relative; margin-bottom:10px;}
   .gallery-main{
     background:var(--panel);
     border:1px solid var(--line);
     aspect-ratio:1/1;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
-    margin-bottom:10px;
   }
   .gallery-main img{width:100%; height:100%; object-fit:cover;}
+  .quality-seal{
+    position:absolute; top:14px; right:14px;
+    width:88px; height:88px;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+    z-index:2;
+  }
+  @media(max-width:480px){ .quality-seal{width:68px; height:68px; top:10px; right:10px;} }
   .gallery-grid{
     display:grid; grid-template-columns:1fr 1fr; gap:10px;
   }
@@ -352,9 +360,44 @@
   .reviews-line{
     font-family:'Inter', sans-serif;
     font-size:12px; color:#18352B; letter-spacing:0.03em;
-    margin-bottom:18px;
+    margin-bottom:14px;
   }
   .reviews-line span{color:var(--gray);}
+
+  .launch-banner{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--green); border:1px solid var(--green-line);
+    padding:10px 14px; margin-bottom:16px;
+    border-radius:3px;
+  }
+  .launch-banner-label{
+    font-family:'Inter', sans-serif; font-size:12.5px; font-weight:600; color:#FAF8F3;
+  }
+  .launch-banner-timer{
+    font-family:'Inter', sans-serif; font-size:12px; font-weight:600;
+    color:#FAF8F3; font-variant-numeric:tabular-nums;
+  }
+  .launch-banner.expired{display:none;}
+
+  .mini-trust-row{
+    display:flex; flex-wrap:wrap; gap:14px;
+    margin-bottom:24px;
+  }
+  .mini-trust-row span{
+    display:flex; align-items:center; gap:6px;
+    font-family:'Inter', sans-serif; font-size:11.5px; color:var(--gray);
+  }
+  .mini-trust-row svg{width:15px; height:15px; stroke:#18352B; flex-shrink:0;}
+
+  .guarantee-callout{
+    display:flex; align-items:flex-start; gap:10px;
+    background:rgba(24,53,43,0.06); border:1px solid rgba(24,53,43,0.18);
+    padding:13px 14px; margin-top:14px; border-radius:3px;
+  }
+  .guarantee-callout svg{width:18px; height:18px; stroke:#18352B; flex-shrink:0; margin-top:1px;}
+  .guarantee-callout span{font-family:'Inter', sans-serif; font-size:12.5px; line-height:1.5; color:var(--white);}
+  .guarantee-callout b{color:#18352B;}
+
   .price-row{
     display:flex; align-items:baseline; gap:12px;
     padding-bottom:22px; margin-bottom:22px;
@@ -391,8 +434,13 @@
   }
   .qty-row{
     display:flex; align-items:stretch; gap:12px;
-    margin-bottom:18px;
+    margin-bottom:10px;
   }
+  .promo-note{
+    font-family:'Inter', sans-serif; font-size:12.5px; line-height:1.5;
+    color:var(--gray); margin-bottom:20px;
+  }
+  .promo-note b{color:#18352B;}
   .qty-stepper{
     display:flex; align-items:center;
     border:1px solid var(--line);
@@ -634,18 +682,28 @@
 
         <!-- GALLERY -->
         <div>
-          <div class="gallery-main" id="galleryMain">
-            <svg class="pan-illustration" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="120" cy="150" rx="88" ry="24" fill="#000" opacity="0.35"/>
-              <circle cx="120" cy="128" r="84" fill="#242424" stroke="#3A5A46" stroke-width="2"/>
-              <circle cx="120" cy="128" r="66" fill="#171717"/>
-              <circle cx="120" cy="128" r="66" fill="url(#grid)"/>
-              <rect x="196" y="118" width="70" height="16" rx="8" fill="#242424" stroke="#3A5A46" stroke-width="2"/>
-              <defs>
-                <pattern id="grid" width="16" height="14" patternUnits="userSpaceOnUse" patternTransform="translate(120 128)">
-                  <path d="M0 0 L8 7 L0 14 M16 0 L8 7 L16 14" stroke="#2E2E2E" stroke-width="1" fill="none"/>
-                </pattern>
-              </defs>
+          <div class="gallery-main-wrap">
+            <div class="gallery-main" id="galleryMain">
+              <svg class="pan-illustration" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="120" cy="150" rx="88" ry="24" fill="#000" opacity="0.35"/>
+                <circle cx="120" cy="128" r="84" fill="#242424" stroke="#3A5A46" stroke-width="2"/>
+                <circle cx="120" cy="128" r="66" fill="#171717"/>
+                <circle cx="120" cy="128" r="66" fill="url(#grid)"/>
+                <rect x="196" y="118" width="70" height="16" rx="8" fill="#242424" stroke="#3A5A46" stroke-width="2"/>
+                <defs>
+                  <pattern id="grid" width="16" height="14" patternUnits="userSpaceOnUse" patternTransform="translate(120 128)">
+                    <path d="M0 0 L8 7 L0 14 M16 0 L8 7 L16 14" stroke="#2E2E2E" stroke-width="1" fill="none"/>
+                  </pattern>
+                </defs>
+              </svg>
+            </div>
+            <svg class="quality-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 50.0,4.0 L 55.69,10.41 L 62.96,5.86 L 66.62,13.61 L 74.87,11.3 L 76.19,19.77 L 84.76,19.88 L 83.65,28.37 L 91.84,30.89 L 88.38,38.73 L 95.53,43.45 L 90.0,50.0 L 95.53,56.55 L 88.38,61.27 L 91.84,69.11 L 83.65,71.63 L 84.76,80.12 L 76.19,80.23 L 74.87,88.7 L 66.62,86.39 L 62.96,94.14 L 55.69,89.59 L 50.0,96.0 L 44.31,89.59 L 37.04,94.14 L 33.38,86.39 L 25.13,88.7 L 23.81,80.23 L 15.24,80.12 L 16.35,71.63 L 8.16,69.11 L 11.62,61.27 L 4.47,56.55 L 10.0,50.0 L 4.47,43.45 L 11.62,38.73 L 8.16,30.89 L 16.35,28.37 L 15.24,19.88 L 23.81,19.77 L 25.13,11.3 L 33.38,13.61 L 37.04,5.86 L 44.31,10.41 Z" fill="#18352B" stroke="#FAF8F3" stroke-width="1"/>
+              <circle cx="50" cy="50" r="34" fill="none" stroke="#FAF8F3" stroke-width="0.8" opacity="0.6"/>
+              <text x="50" y="38" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.2" font-weight="700" fill="#FAF8F3" letter-spacing="0.3">RESTAURANT</text>
+              <text x="50" y="48" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.2" font-weight="700" fill="#FAF8F3" letter-spacing="0.3">GRADE</text>
+              <line x1="35" y1="55" x2="65" y2="55" stroke="#FAF8F3" stroke-width="0.6" opacity="0.7"/>
+              <text x="50" y="65" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" letter-spacing="1" fill="#FAF8F3">COOKWARE</text>
             </svg>
           </div>
           <div class="gallery-grid" id="galleryGrid"></div>
@@ -657,8 +715,19 @@
           <h1 id="productTitle">3 Litre Hybrid Sauté Pan with Lid</h1>
           <div class="reviews-line">★★★★★ <span>3,985 reviews</span></div>
 
+          <div class="launch-banner" id="launchBanner">
+            <span class="launch-banner-label">🔥 Launch price</span>
+            <span class="launch-banner-timer" id="launchTimer">ends in --d --h --m</span>
+          </div>
+
           <div class="price-row">
             <span class="price-now" id="buyboxPrice">£39.00</span>
+          </div>
+
+          <div class="mini-trust-row">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Secure checkout</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Lifetime warranty</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>30-day guarantee</span>
           </div>
 
           <span class="variant-label">Select size</span>
@@ -677,9 +746,15 @@
               <button type="button" id="qtyPlus">+</button>
             </div>
           </div>
+          <p class="promo-note">Buy 2, get the 2nd pan <b>20% off</b> — discount applied automatically at checkout.</p>
 
           <a href="#" class="btn btn-buynow btn-block" id="buyNowBtn">Buy now</a>
           <a href="#" class="btn btn-addcart btn-block" style="margin-top:10px;">Add to basket</a>
+
+          <div class="guarantee-callout">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span><b>30 days, risk-free.</b> Not happy with it? Full refund, no questions asked.</span>
+          </div>
 
           <div class="trust-list">
             <div class="item">
@@ -996,11 +1071,15 @@
 
   let qty = 1;
   const qtyValue = document.getElementById('qtyValue');
+  function currentSize(){
+    const activeChip = document.querySelector('.variant-chip.active');
+    return activeChip ? activeChip.textContent.trim() : '3 L';
+  }
   document.getElementById('qtyMinus').addEventListener('click', ()=>{
-    if(qty > 1){ qty--; qtyValue.textContent = qty; }
+    if(qty > 1){ qty--; qtyValue.textContent = qty; updatePriceDisplays(currentSize()); }
   });
   document.getElementById('qtyPlus').addEventListener('click', ()=>{
-    qty++; qtyValue.textContent = qty;
+    qty++; qtyValue.textContent = qty; updatePriceDisplays(currentSize());
   });
 
   document.querySelectorAll('.variant-chip').forEach(chip=>{
@@ -1144,6 +1223,25 @@
 
   updateGallery('3 L');
 
+  // Contador do preço de lançamento — data real e fixa, não reinicia sozinho.
+  // Pra estender a promoção no futuro, troque LAUNCH_END_DATE manualmente.
+  const LAUNCH_END_DATE = new Date('2026-08-30T23:59:59+01:00');
+  function updateLaunchTimer(){
+    const banner = document.getElementById('launchBanner');
+    const timerEl = document.getElementById('launchTimer');
+    const diff = LAUNCH_END_DATE - new Date();
+    if(diff <= 0){
+      banner.classList.add('expired');
+      return;
+    }
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+    timerEl.textContent = `ends in ${days}d ${hours}h ${mins}m`;
+  }
+  updateLaunchTimer();
+  setInterval(updateLaunchTimer, 60000);
+
   const cartCountEl = document.getElementById('cartCount');
   const SIZE_PRICES = {
     "3 L": 39.00,
@@ -1159,16 +1257,25 @@
   };
 
   function updatePriceDisplays(size){
-    const price = SIZE_PRICES[size];
-    const fmtPrice = fmt(price);
-    document.getElementById('buyboxPrice').textContent = fmtPrice;
-    document.getElementById('stickyPrice').textContent = fmtPrice;
-    document.getElementById('finalCtaBtn').textContent = `Add to basket — ${fmtPrice}`;
+    const unitPrice = SIZE_PRICES[size];
+    const total = calcLineTotal(unitPrice, qty);
+    const fmtTotal = fmt(total);
+    const fmtUnit = fmt(unitPrice);
+    document.getElementById('buyboxPrice').textContent = qty >= 2 ? fmtTotal : fmtUnit;
+    document.getElementById('stickyPrice').textContent = qty >= 2 ? fmtTotal : fmtUnit;
+    document.getElementById('finalCtaBtn').textContent = `Add to basket — ${fmtUnit}`;
   }
 
   let cartItems = []; // { size, qty, price }
 
   function fmt(n){ return '£' + n.toFixed(2); }
+
+  // Promoção: 1ª unidade preço cheio, a 2ª tem 20% off — repete a cada par (3ª cheia, 4ª com desconto...)
+  function calcLineTotal(unitPrice, qty){
+    const pairs = Math.floor(qty / 2);
+    const remainder = qty % 2;
+    return (pairs * unitPrice * 1.8) + (remainder * unitPrice);
+  }
 
   updatePriceDisplays('3 L');
   updateTitle('3 L');
@@ -1194,10 +1301,10 @@
           <div class="cart-item-info">
             <div class="brand">The Cookery</div>
             <div class="name">Hybrid Sauté Pan with Lid</div>
-            <div class="meta">Size: ${item.size}<br>Qty: ${item.qty}</div>
+            <div class="meta">Size: ${item.size}<br>Qty: ${item.qty}${item.qty >= 2 ? '<br><span class="promo-tag">2nd pan 20% off</span>' : ''}</div>
           </div>
           <div class="cart-item-right">
-            <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
+            <div class="cart-item-price">${fmt(calcLineTotal(item.price, item.qty))}</div>
             <div class="cart-item-delete" data-index="${i}">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/></svg>
             </div>
@@ -1216,7 +1323,7 @@
       });
     }
 
-    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const subtotal = cartItems.reduce((sum, item) => sum + calcLineTotal(item.price, item.qty), 0);
     subtotalEl.textContent = fmt(subtotal);
     totalEl.textContent = fmt(subtotal);
 
